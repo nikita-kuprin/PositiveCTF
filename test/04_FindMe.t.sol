@@ -10,7 +10,6 @@ contract FindMeTest is BaseTest {
 
     function setUp() public override {
         super.setUp();
-
         uint16 setImmutable = uint16(uint160(tx.origin));
         bytes32[3] memory data;
         data[0] = keccak256(abi.encodePacked(tx.origin, "0"));
@@ -20,8 +19,8 @@ contract FindMeTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        bytes32 key = keccak256(abi.encodePacked(tx.origin, "1"));
+        instance.unLock(bytes16(key));
         checkSuccess();
     }
 

